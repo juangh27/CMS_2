@@ -6,22 +6,23 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=1234Qwer
-      - POSTGRES_DB=nidodb
+      - POSTGRES_DB=cmsdb
     volumes:
       - .postgres_data:/var/lib/postgresql/data/
     ports:
-      - "5435:5432"
+      - "5437:5432"
       
   server:
-    container_name: nido_server
+    container_name: cms_server
     volumes:
       - ./server:/app
+      - ./server/static:/app/static
 
     env_file:
       - .env
     build: ./server
     ports:
-      - "8001:8000"
+      - "8005:8000"
     depends_on:
       - db
 
@@ -31,7 +32,7 @@ services:
     volumes:
       - ./server/static:/static
     ports:
-      - "80:80"
+      - "85:80"
     depends_on:
       - server
 

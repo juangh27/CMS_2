@@ -77,7 +77,7 @@
 //  manage.py makemigrations
     manage.py migrate
 
-    docker exec -it nido_server sh
+    docker exec -it cms_server sh
 
 
 

@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-tc80_qji=j_y*5tz3bu7i4wqiir0ga8tl-hq3a*emazb@%xd66
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'localhost:85']
 
 
 # Application definition
@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'nido',
+    'cms',
     'django.contrib.staticfiles',
     'corsheaders',
 ]
@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'server.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'nidodb',
+        'NAME': 'cmsdb',
         'USER': 'postgres',
         'PASSWORD': '1234Qwer',
         'HOST': 'db',
@@ -107,10 +107,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+SRF_COOKIE_SAMESITE = None
+CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_HTTPONLY = False
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:8001',  # Replace with your frontend URL
-    'http://localhost:80', 
+    'http://localhost:8005',  # Replace with your frontend URL
+    'http://localhost:85', 
     'https://r.stripe.com',
     # Replace with your frontend URL
 ]

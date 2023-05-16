@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html>
+{% include 'cms/header.html' %}
+<title>{% block title %}{% endblock %}</title>
+
+<body>
+    {% block body %}
+    <div class="container-scroller">
+
+        <div class="container-fluid page-body-wrapper">
+
+                {% include "cms/navbar_top.html" %}
+                {% include "cms/sidebar.html" %}
+                {% block content %}{% endblock %}
+                
+            </div>
+            <div id="footer">
+                {% include "cms/footer.html" %}
+            </div>
+    </div>
+    {% endblock %}
+    {% include "cms/scripts.html" %}
+
+    {% block scripts %}
+    <!-- include any script tags here -->
+    {% endblock %}
+</body>
+
+</html>
