@@ -1,5 +1,8 @@
 #!/bin/sh
 # Run database migrations
+
+# revisar que el archivo sh sea LF en vez de CRLF
+
 python manage.py makemigrations
 python manage.py migrate
 

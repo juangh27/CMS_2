@@ -134,3 +134,23 @@ class MenuSubItem2(models.Model):
     
     def get_icon(self):
         return self.icon if self.icon else 'icon-grid' 
+    
+class MedicalEquipment(models.Model):
+    EQUIPMENT_TYPES = (
+        ('ECG', 'Electrocardiograma'),
+        ('BP', 'Monitor de presion sanguinea'),
+        ('SP', 'Estetoscopio'),
+        ('OT', 'Tanque de oxigeno'),
+        # Add more equipment types as needed
+    )
+
+    serial_number = models.CharField(max_length=20)
+    equipment_type = models.CharField(max_length=4, choices=EQUIPMENT_TYPES)
+    manufacturer = models.CharField(max_length=100)
+    model = models.CharField(max_length=100)
+    calibration_date = models.DateField()
+    last_service_date = models.DateField()
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"{self.get_equipment_type_display()} - {self.serial_number}"

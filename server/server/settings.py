@@ -116,11 +116,14 @@ CORS_ALLOWED_ORIGINS = [
     'https://r.stripe.com',
     # Replace with your frontend URL
 ]
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:85',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'es-mx'
+LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 

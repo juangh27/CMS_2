@@ -2,9 +2,12 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from django.conf import settings 
-from cms.models import MenuSubItem2
+from cms.models import MenuSubItem2,MedicalEquipment
 from django.db import connection
 from django.db import reset_queries
+from django_datatables_view.base_datatable_view import BaseDatatableView
+from django.views.decorators.csrf import csrf_exempt
+from django.urls import reverse
 
 from django.views.generic.base import TemplateView
 
@@ -21,6 +24,10 @@ def test(request):
 def test2(request):
     return render(request, 'cms/test2.html')
 
+
+def test_copy(request):
+    return render(request, 'cms/test_copy.html')
+
 def sidebar(request):
     return render(request, 'cms/sidebar.html')
 
@@ -33,6 +40,35 @@ def test_nav(request):
 
 def test_body(request):
     return render(request, 'cms/test_body.html')
+
+class MedicalEquipmentJson(BaseDatatableView):
+    model = MedicalEquipment
+    columns = ['serial_number', 'equipment_type', 'manufacturer', 'model', 'calibration_date', 'last_service_date', 'is_active']
+
+    @csrf_exempt
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_initial_queryset(self):
+        return self.model.objects.all()
+
+    def prepare_results(self, qs):
+        data = []
+        for item in qs:
+            edit_button = f'<a href="#" class="btn btn-outline-info" data-equipment-id="{item.pk}" id="edit-btn">Editar</a>'
+            delete_button = f'<a href="#" class="btn btn-outline-danger" data-equipment-id="{item.pk}" id="delete-btn">Borrar</a>'
+            data.append({
+            'id': item.id,
+            'serial_number': item.serial_number,
+            'equipment_type': item.get_equipment_type_display(),
+            'manufacturer': item.manufacturer,
+            'model': item.model,
+            'calibration_date': item.calibration_date.strftime('%Y-%m-%d'),
+            'last_service_date': item.last_service_date.strftime('%Y-%m-%d'),
+            'is_active': str(item.is_active),
+            'actions' : f'{edit_button} | {delete_button}'
+            })
+        return data
 
 def menu_items():
     navbar = MenuSubItem2.objects.filter(parent=None).prefetch_related('parent__menusubitem2_set').order_by('id')

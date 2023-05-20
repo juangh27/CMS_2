@@ -1,8 +1,41 @@
 {% extends "cms/base_dashboard2.html" %}
+{% load static %}
 
 {% block content %}
-    <!-- main content -->
-
-<p>nkdjnfkjsdnk</p>
-
+<!-- main content -->
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <p class="card-title">Equipos medicos</p>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table id="equipos" class="display expandable-table" style="width:100%"
+                                data-url="{% url 'cms:equipment_data' %}" data-processing="true"
+                                data-server-side="true">
+                                <thead>
+                                    <tr>
+                                        <th>#Id</th>
+                                        <th>Numero serial</th>
+                                        <th>Tipo de equipo</th>
+                                        <th>Manufactura</th>
+                                        <th>Modelo</th>
+                                        <th>Fecha de calibracion</th>
+                                        <th>Ultimo servicio</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/cms/child_inventario.js' %}"></script>
 {% endblock %}
