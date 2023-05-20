@@ -74,6 +74,14 @@
 
 
 
+//  manage.py makemigrations
+    manage.py migrate
+
+    docker exec -it cms_server sh
+
+
+revisar que el archivo sh sea LF en vez de CRLF
+
 
 
 
