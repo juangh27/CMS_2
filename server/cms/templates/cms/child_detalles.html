@@ -1,0 +1,280 @@
+{% extends "cms/base_dashboard2.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/cms/tabla.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- main content -->
+<div class="col-md-12 grid-margin stretch-card" id="main-card">
+    <div class="card">
+        <div class="card-body">
+            <p class="card-title">Id: <span id="id-equipo">N/A</span></p>
+
+            <div id="equipment-main">
+                <div class="row">
+                    <div class="col-4">
+                        <p>
+                        <h4>Equipo: </h4>
+                        <h5><span id="equipo">N/A</span></h5>
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <p>
+                        <h4>Marca: </h4>
+                        <h5><span id="marca">N/A</span></h5>
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <p>
+                        <h4>Modelo: </h4>
+                        <h5><span id="modelo">N/A</span></h5>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <p>
+                        <h4>Numero de serie: </h4>
+                        <h5><span id="no-serie">N/A</span></h5>
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <p>
+                        <h4>Ultimo servicio: </h4>
+                        <h5><span id="ult-servicio">N/A</span></h5>
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <p>
+                        <h4>Proximo servicio: </h4>
+                        <h5><span id="prox-servicio">N/A</span></h5>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <p>
+                        <h4>Estado: </h4>
+                        <h5><span id="estado">N/A</span></h5>
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <p>
+                        <h4>Area </h4>
+                        <h5><span id="area">N/A</span></h5>
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <p>
+                        <h4>Sub area: </h4>
+                        <h5><span id="subarea">N/A</span></h5>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <p>
+                        <h4>Encargado: </h4>
+                        <h5><span id="encargado">N/A</span></h5>
+                        </p>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-4">
+                      <button id="nuevo-btn" class="btn btn-block btn-primary" style="display: none;">Agregar</button>
+                    </div>
+                  </div>
+                  
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <p class="card-title">Detalles</p>
+            <div id="equipment-details">
+                <div class="row">
+                    <div class="col-4">
+                        <p>
+                        <h4>Fecha de instalacion: </h4>
+                        <h5></h5><span id="inst-fecha">N/A</span></h5>
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <p>
+                        <h4>Años Operando: </h4>
+                        <h5><span id="operando">N/A</span></h5>
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <p>
+                        <h4>Ultima actualización: </h4>
+                        <h5><span id="ult-actualizacion">N/A</span></h5>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <p>
+                        <h4>Estatus: </h4>
+                        <h5></h5><span id="estatus">N/A</span></h5>
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <p>
+                        <h4>Ubicación: </h4>
+                        <h5><span id="ubicacion">N/A</span></h5>
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <p>
+                        <h4>Sub ubicación: </h4>
+                        <h5><span id="sububicacion">N/A</span></h5>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <p>
+                        <h4>Pertenencia: </h4>
+                        <h5></h5><span id="pertenencia">N/A</span></h5>
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <p>
+                        <h4>Dueño: </h4>
+                        <h5><span id="duenio">N/A</span></h5>
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <p>
+                        <h4>Vendido por: </h4>
+                        <h5><span id="vendido-por">N/A</span></h5>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <p>
+                        <h4>Adquisición: </h4>
+                        <h5></h5><span id="adquisicion">N/A</span></h5>
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <p>
+                        <h4>Precio de compra: </h4>
+                        <h5><span id="precio-compra">N/A</span></h5>
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <p>
+                        <h4>Divisas: </h4>
+                        <h5><span id="divisas">N/A</span></h5>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <p>
+                        <h4>Frecuencia de mprev: </h4>
+                        <h5></h5><span id="frecuencia_mprev">N/A</span></h5>
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <p>
+                        <h4>Ultimp mprev: </h4>
+                        <h5><span id="ultimo-mprev">N/A</span></h5>
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <p>
+                        <h4>Proximo mprev: </h4>
+                        <h5><span id="proximo-mprev">N/A</span></h5>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <p>
+                        <h4>Riesgo: </h4>
+                        <h5></h5><span id="riesgo">N/A</span></h5>
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <p>
+                        <h4>Cricticidad: </h4>
+                        <h5><span id="cricticidad">N/A</span></h5>
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <p>
+                        <h4>Provedor: </h4>
+                        <h5><span id="provedor">N/A</span></h5>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <p>
+                        <h4>Garantia: </h4>
+                        <h5></h5><span id="garantia">N/A</span></h5>
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <p>
+                        <h4>Accesorios: </h4>
+                        <h5></h5><span id="accesorios">N/A</span></h5>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <p class="card-title">Equipos medicos</p>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table id="equipos" class="display expandable-table" style="width:100%"
+                                data-url="{% url 'cms:equipment_data' %}" data-processing="true"
+                                data-server-side="true">
+                                <thead>
+                                    <tr>
+                                        <th>#Id</th>
+                                        <th>Equipo</th>
+                                        <th>Marca</th>
+                                        <th>Modelo</th>
+                                        <th>Numero de serie</th>
+                                        <th>Fecha de ultimo servicio</th>
+                                        <th>Fecha de proximo mantenimiento</th>
+                                        <th>Estado</th>
+                                        <th>Area</th>
+                                        <th>Sub area</th>
+                                        <th>Encargado</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="agregar-modal" tabindex="-1" role="dialog"
+     aria-hidden="true">
+    {% include 'cms/modals/equipment_details_modal.html' %}
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/cms/child_detalles.js' %}"></script>
+{% endblock %}

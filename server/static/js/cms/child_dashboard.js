@@ -5,18 +5,24 @@ console.log($equipos);
 console.log($equipos.data('url'));
 $(document).ready(function () {
   var table = $('#equipos').DataTable({
-    "ajax": "http://localhost:85"+ $equipos.data('url'),
+    "ajax": {
+      "url": "/cms/equipment-data/",  // Specify the relative URL here
+      "type": "GET"
+    },
     "processing": $equipos.data('processing'),
     "serverSide": $equipos.data('server-side'),
     "columns": [
       { "data": "id" },
-      { "data": "serial_number" },
-      { "data": "equipment_type" },
-      { "data": "manufacturer" },
-      { "data": "model" },
-      { "data": "calibration_date" },
-      { "data": "last_service_date" },
-      { "data": "is_active" },
+      { "data": "equipo" },
+      { "data": "marca" },
+      { "data": "modelo" },
+      { "data": "no_serie" },
+      { "data": "servicio_ult" },
+      { "data": "servicio_prox" },
+      { "data": "estado" },
+      { "data": "area" },
+      { "data": "subarea" },
+      { "data": "encargado" },
     ],
     "order": [[1, 'asc']],
     "paging": false,

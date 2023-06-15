@@ -1,0 +1,40 @@
+<!-- Modal content -->
+
+<style>
+    .form-columns {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+</style>
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="editEquipmentModalLabel"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <!-- Add your form fields and buttons here for editing the equipment -->
+            <form method="post"
+                action="{% if equipment.id %}{% url 'cms:edit_equipment' equipment_id=equipment.id %}{% else %}{% url 'cms:edit_equipment' %}{% endif %}">
+
+                {% csrf_token %}
+                <div class="form-columns">
+                    {% for field in form.visible_fields %}
+                        <div class="form-group">
+                            {{ field.label_tag }}
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-outline-primary" id="btn-label">Guardar</button>
+                    <button type="submit" class="btn btn-outline-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

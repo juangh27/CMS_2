@@ -3,7 +3,8 @@
 
 {% block content %}
 <!-- main content -->
-
+{% if user.is_authenticated %}
+    {{ group.name }}
 <div class="row">
     <div class="col-md-5 grid-margin transparent">
         <div class="card-people mt-auto">
@@ -62,20 +63,21 @@
                     <div class="col-12">
                         <div class="table-responsive">
                             <table id="equipos" class="display expandable-table" style="width:100%"
-                            data-url="{% url 'cms:equipment_data' %}"
-                            data-processing="true"
-                            data-server-side="true"
-                            >
+                                data-url="{% url 'cms:equipment_data' %}" data-processing="true"
+                                data-server-side="true">
                                 <thead>
                                     <tr>
                                         <th>#Id</th>
-                                        <th>Numero serial</th>
-                                        <th>Tipo de equipo</th>
-                                        <th>Manufactura</th>
+                                        <th>Equipo</th>
+                                        <th>Marca</th>
                                         <th>Modelo</th>
-                                        <th>Fecha de calibracion</th>
-                                        <th>Ultimo servicio</th>
+                                        <th>Numero de serie</th>
+                                        <th>Fecha de ultimo servicio</th>
+                                        <th>Fecha de proximo mantenimiento</th>
                                         <th>Estado</th>
+                                        <th>Area</th>
+                                        <th>Sub area</th>
+                                        <th>Encargado</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -86,6 +88,9 @@
         </div>
     </div>
 </div>
+{% else %}
+<p>Please log in to access this page.</p>
+{% endif %}
 {% endblock %}
 {% block scripts %}
 <script src="{% static 'js/cms/child_dashboard.js' %}"></script>

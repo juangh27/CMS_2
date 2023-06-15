@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'cms',
     'django.contrib.staticfiles',
     'corsheaders',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +55,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'server.urls'
+AUTH_USER_MODEL = 'cms.User'
 
 TEMPLATES = [
     {
