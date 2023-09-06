@@ -113,9 +113,3 @@ scp -i C:\Users\jmgh8\Downloads\nido_ssh.pem ubuntu@44.202.131.33:/home/ubuntu/b
 scp -i C:\Users\jmgh8\Downloads\nido_ssh.pem ubuntu@44.202.131.33:/home/ubuntu/backup.sql C:\Users\jmgh8\Desktop
 
 
-
-
-
-
-
-
