@@ -55,15 +55,46 @@ $(document).ready(function () {
     // You can customize this based on your modal implementation
     console.log('Edit button clicked for equipment ID:', equipmentId);
   });
-
+let idItem = 0;
   // Handle delete button click event
   $(document).on('click', '#delete-btn', function (e) {
     e.preventDefault();
     var equipmentId = $(this).data('equipment-id');
+    idItem= equipmentId;
+    $('#deleteModal').modal('show');
     // Use equipmentId to perform necessary actions, such as opening the delete modal
     // You can customize this based on your modal implementation
     console.log('Delete button clicked for equipment ID:', equipmentId);
   });
+
+  document.getElementById("deleteItemButton").addEventListener("click", function() {
+    // Perform the AJAX request to delete the item
+    var itemId = idItem; // Replace with the appropriate ID of the item to delete
+    var deleteUrl = '/cms/delete-equipment/' + itemId + '/' ;  // Replace with the URL of the delete view
+    console.log(itemId);
+    console.log(deleteUrl);
+
+    var csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    // Make the AJAX request to delete the item
+    $.ajax({
+      url: deleteUrl,
+      type: "POST",
+      data: {
+        csrfmiddlewaretoken: csrfToken
+      },
+      success: function(response) {
+        // Redirect to the same page after successful deletion
+        window.location.href = window.location.href;
+      },
+      error: function(xhr, errmsg, err) {
+        // Handle error if necessary
+        // console.log(xhr.status + ": " + xhr.responseText);
+        console.log('xhr.status + ": " + xhr.responseText');
+      }
+    });
+  });
+
+  // 
   $(document).on('click', '#new_equipment_btn', function (e) {
     e.preventDefault();
     var test = 0
@@ -88,6 +119,7 @@ $(document).ready(function () {
     else {
       var url = '/cms/edit-equipment/' + equipmentId;
     }
+    console.log(url);
     // var url = equipmentId ? '/cms/edit-equipment/' + equipmentId + '/' : '/cms/edit-equipment/';
     $('#btn-label').text('Guardar');
     // Make an AJAX request to fetch the form HTML from the server

@@ -6,6 +6,7 @@ from .models import MedicalEquipments, MedicalEquipmentDetails
 class MedicalEquipmentForm(forms.ModelForm):
     class Meta:
         model = MedicalEquipments
+        exclude = ['group']
         fields = '__all__'  # Include all fields from the model
         # You can also specify the fields explicitly like:
         # fields = ['serial_number', 'equipment_type', 'manufacturer', 'model', 'calibration_date', 'last_service_date', 'is_active']
@@ -19,6 +20,7 @@ class MedicalEquipmentForm(forms.ModelForm):
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
             
+        
     def as_two_column(self):
         # Add 'row' class to the form
         self.form_class = 'row'
@@ -44,8 +46,14 @@ class MedicalDetailsEquipmentForm(forms.ModelForm):
             'proximo_mprev': forms.DateInput(attrs={'type': 'date'}),
         }
     def __init__(self, *args, **kwargs):
-        equipment_id = kwargs.pop('equipment_id', None)
         super().__init__(*args, **kwargs)
+        self.fields['instalacion_fecha'].required = False
+        self.fields['ultimo_mprev'].required = False
+        self.fields['proximo_mprev'].required = False
+        self.fields['ultima_actualizacion'].required = False
+        self.fields['adquisicion'].required = False
+        self.fields['precio_compra'].required = False
+        equipment_id = kwargs.pop('equipment_id', None)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
         if equipment_id:

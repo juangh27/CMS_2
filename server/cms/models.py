@@ -59,8 +59,8 @@ class MedicalEquipments(models.Model):
 
     equipo = models.CharField(max_length=100)
     marca = models.CharField(max_length=50)
-    modelo = models.CharField(max_length=6)
-    no_serie  = models.IntegerField()
+    modelo = models.CharField(max_length=50)
+    no_serie  = models.CharField(max_length=50)
     servicio_ult = models.DateField()
     servicio_prox = models.DateField()
     estado = models.CharField(max_length=10, choices=estados)
@@ -72,35 +72,32 @@ class MedicalEquipments(models.Model):
     def __str__(self):
         return self.equipo
 class MedicalEquipmentDetails(models.Model):
-
     equipo = models.OneToOneField(
         MedicalEquipments,
         on_delete=models.CASCADE,
         related_name='details'
     )
     
-    instalacion_fecha = models.DateField(verbose_name='fecha de instalación')
-    anios_operando = models.IntegerField(verbose_name='años operando')
-    ultima_actualizacion = models.DateTimeField()
+    instalacion_fecha = models.DateField(null=True, blank=True, verbose_name='fecha de instalación')
+    anios_operando = models.IntegerField(null=True,verbose_name='años operando')
+    ultima_actualizacion = models.DateTimeField(null=True, blank=True)
     estatus = models.CharField(max_length=100)
     ubicacion = models.CharField(max_length=200)
     sub_ubicacion = models.CharField(max_length=200)
     pertenencia = models.CharField(max_length=200)
     duenio = models.CharField(max_length=200, verbose_name='dueño')
     vendido_por = models.CharField(max_length=200)
-    adquisicion = models.DateField()
-    precio_compra = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='precio')
+    adquisicion = models.DateField(null=True, blank=True)
+    precio_compra = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2, verbose_name='precio')
     divisas = models.CharField(max_length=5) 
     provedor = models.CharField(max_length=200)
     frecuencia_mprev = models.CharField(max_length=200)
-    ultimo_mprev = models.DateField()
-    proximo_mprev = models.DateField()
+    ultimo_mprev = models.DateField(null=True, blank=True)
+    proximo_mprev = models.DateField(null=True, blank=True)
     riesgo = models.CharField(max_length=200)
     cricticidad = models.CharField(max_length=200)
-    provedor = models.CharField(max_length=200)
     garantia = models.CharField(max_length=200)
     accesorios = models.CharField(max_length=200)
-
 
     def __str__(self):
         return str(self.equipo)

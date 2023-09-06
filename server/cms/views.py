@@ -16,8 +16,13 @@ from django.views.generic.base import TemplateView
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import user_passes_test
 
 from django.contrib.auth import authenticate, login,logout
+
+def user_is_authenticated(user):
+    return user.is_authenticated
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -44,20 +49,31 @@ def edit_equipment(request, equipment_id=None):
         equipment = get_object_or_404(MedicalEquipments, id=equipment_id)
     else:
         equipment = None
+    
 
     if request.method == 'POST':
+        group = request.user.groups.first()
         form = MedicalEquipmentForm(request.POST, instance=equipment)
+        
+        print(group)
+        print(form)
         if form.is_valid():
-            form.save()
+            instance = form.save(commit=False)
+            print('test intance')
+
+            # Add the excluded field value to the instance
+            group_id = group.id
+            print(group_id)
+            print(instance.group_id)
+            instance.group_id = group_id
+            print(instance.group_id)
+            instance.save()
             return JsonResponse({'success': True})  # Return success response as JSON
         else:
             return JsonResponse({'success': False, 'errors': form.errors})  # Return form errors as JSON
     else:
         form = MedicalEquipmentForm(instance=equipment)
 
-        if request.user.groups.exists():
-            group = request.user.groups.first()
-            form.fields['group'].initial = group
     return render(request, 'cms/modals/equipment_modal.html', {'form': form, 'equipment': equipment})
 
 def equipment_details(request, equipment_id=None):
@@ -79,6 +95,7 @@ def equipment_details(request, equipment_id=None):
         form = MedicalDetailsEquipmentForm(instance=details, initial={'equipo': equipment_id})
 
     return render(request, 'cms/modals/equipment_details_modal.html', {'form': form, 'equipment': equipment})
+
 
 def get_equipment_details(request, equipment_id):
     try:
@@ -195,7 +212,7 @@ class MedicalEquipmentJson(BaseDatatableView):
 def menu_items():
     navbar = MenuSubItem2.objects.filter(parent=None).prefetch_related('parent__menusubitem2_set').order_by('id')
     return navbar
-
+@user_passes_test(user_is_authenticated, login_url='/login/') 
 def dashboard(request, **kwargs):
     # User is logged in
     user = request.user
@@ -204,7 +221,7 @@ def dashboard(request, **kwargs):
     groups = user.groups.all()
     if not groups:
     # No groups found, it is empty
-        context = {'menu_items': menu_items, 'page_title': 'Dashboard', 'page_subtitle': 'Aqui puede ver su informacion general',"user":user}
+        context = {'menu_items': menu_items, 'page_title': 'Dashboard', 'page_subtitle': 'No esta logeado',"user":user}
     else:
     # Groups found, iterate over them or perform other operations
         for group in groups:
@@ -215,27 +232,36 @@ def dashboard(request, **kwargs):
 
     
     return render(request, 'cms/child_dashboard.html', context=context)
-
+@user_passes_test(user_is_authenticated, login_url='/login/') 
 def inventario(request, **kwargs):
     context = {'menu_items': menu_items, 'page_title': 'Inventario', 'page_subtitle': 'Estos son los equipos con los que cuenta'}
     return render(request, 'cms/child_inventario.html', context=context)
-
+@user_passes_test(user_is_authenticated, login_url='/login/') 
 def detalles(request, **kwargs):
     context = {'menu_items': menu_items, 'page_title': 'Detalles', 'page_subtitle': 'Especificaciones de los equipos con los que cuenta'}
     return render(request, 'cms/child_detalles.html', context=context)
-
+@user_passes_test(user_is_authenticated, login_url='/login/') 
 def provedores(request, **kwargs):
     context = {'menu_items': menu_items, 'page_title': 'Provedores', 'page_subtitle': 'Subtitulo provedores'}
     return render(request, 'cms/child_provedores.html', context=context)
-
+@user_passes_test(user_is_authenticated, login_url='/login/') 
 def servicios(request, **kwargs):
     context = {'menu_items': menu_items, 'page_title': 'Servicios', 'page_subtitle': 'This is an example page'}
     return render(request, 'cms/child_servicios.html', context=context)
-
+@user_passes_test(user_is_authenticated, login_url='/login/') 
 def calendarios(request, **kwargs):
     context = {'menu_items': menu_items, 'page_title': 'Calendarios', 'page_subtitle': ''}
     return render(request, 'cms/child_calendarios.html', context=context)
-
+@user_passes_test(user_is_authenticated, login_url='/login/') 
 def cuenta(request, **kwargs):
     context = {'menu_items': menu_items, 'page_title': 'Cuenta', 'page_subtitle': 'Configuracion de la cuenta'}
     return render(request, 'cms/child_cuenta.html', context=context)
+
+
+def register_delete(request, equipment_id=0):
+    print(request)
+    print(equipment_id)
+    my_model = get_object_or_404(MedicalEquipments, id=equipment_id)
+    my_model.delete()
+    return JsonResponse({'success': True})
+    

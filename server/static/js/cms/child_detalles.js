@@ -188,7 +188,7 @@ $(document).ready(function () {
         $('#duenio').text(data.duenio || 'N/A');
         $('#vendido-por').text(data.vendido_por || 'N/A');
         $('#adquisicion').text(data.adquisicion || 'N/A');
-        $('#precio-compra').text(data.precio_compra || 'N/A');
+        $('#precio-compra').text(data.precio_compra !== null && data.precio_compra !== 'None' ? data.precio_compra : 'N/A');
         $('#divisas').text(data.divisas || 'N/A');
         $('#frecuencia_mprev').text(data.frecuencia_mprev || 'N/A');
         $('#ultimo-mprev').text(data.ultimo_mprev || 'N/A');

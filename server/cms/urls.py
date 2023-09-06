@@ -28,6 +28,7 @@ urlpatterns = [
     path('equipment_details_modal/', views.equipment_details, name='equipment_details'),
     path('equipment_details_modal/<int:equipment_id>', views.equipment_details, name='equipment_details'),
     path('edit-equipment/<int:equipment_id>/', views.edit_equipment, name='edit_equipment'),
+    path('delete-equipment/<int:equipment_id>/', views.register_delete, name='delete_equipment'),
     path('edit-equipment/', views.edit_equipment, name='edit_equipment'),
     path('logout/', views.logout_view, name='logout'),
 

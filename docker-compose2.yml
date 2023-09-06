@@ -1,0 +1,40 @@
+version: '3.7'
+
+services:
+  db1:
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234Qwer
+      - POSTGRES_DB=cmsdb
+    volumes:
+      - .postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5438:5432"
+      
+  server1:
+    container_name: cms_server1
+    volumes:
+      - ./server:/app
+      - ./server/static:/app/static
+
+    env_file:
+      - .env
+    build: ./server
+    ports:
+      - "8006:8000"
+    depends_on:
+      - db1
+
+
+  nginx1:
+    build: ./nginx
+    volumes:
+      - ./server/static:/static
+    ports:
+      - "86:80"
+    depends_on:
+      - server1
+
+volumes:
+  postgres_data:

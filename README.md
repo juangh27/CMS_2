@@ -88,3 +88,34 @@ revisar que el archivo sh sea LF en vez de CRLF
 
 
 
+
+docker exec -t <container_name_or_id> pg_dump -U <database_user> -d <database_name> > /path/on/aws/server/backup.sql
+docker exec -t <98366c41e2a0> pg_dump -U <postgres> -d <cmsdb> > /cms/backup.sql
+sudo docker exec -t 98366c41e2a0 pg_dump -U postgres -d cmsdb > /cms/backup.sql
+
+sudo docker exec -it 98366c41e2a0 mkdir /backup
+
+
+sudo docker exec -t 98366c41e2a0 sh -c "pg_dump -U postgres -d cmsdb > /backup/backup.sql"
+
+sudo docker cp 98366c41e2a0:/backup/backup.sql /home/ubuntu/backup.sql
+
+scp ubuntu@<aws_server_ip>:/home/ubuntu/backup.sql /path/on/your/local/pc/
+scp ubuntu@123.456.789.123:/home/ubuntu/backup.sql ~/Downloads/
+scp ubuntu@44.202.131.33:/home/ubuntu/backup.sql ~/Downloads/
+
+scp C:\Users\jmgh8\Downloads\nido_claves.ppk ubuntu@44.202.131.33:/path/on/server/
+
+ssh -i C:\Users\jmgh8\Downloads\nido_ssh.pem ubuntu@44.202.131.33
+
+scp -i C:\Users\jmgh8\Downloads\nido_ssh.pem ubuntu@44.202.131.33:/home/ubuntu/backup.sql
+
+scp -i C:\Users\jmgh8\Downloads\nido_ssh.pem ubuntu@44.202.131.33:/home/ubuntu/backup.sql C:\Users\jmgh8\Desktop
+
+
+
+
+
+
+
+
