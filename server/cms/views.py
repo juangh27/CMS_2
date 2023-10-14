@@ -10,7 +10,7 @@ from django.contrib.auth.models import Group
 from rest_framework import viewsets
 from rest_framework import permissions
 from cms.serializers import UserSerializer, GroupSerializer
-from cms.models import MenuSubItem2,MedicalEquipments ,User, MedicalEquipmentDetails
+from cms.models import MenuSubItem2,MedicalEquipments ,User, MedicalEquipmentDetails, Room
 from .forms import MedicalEquipmentForm, MedicalDetailsEquipmentForm
 from django.views.generic.base import TemplateView
 from django.http import JsonResponse
@@ -256,7 +256,15 @@ def calendarios(request, **kwargs):
 def cuenta(request, **kwargs):
     context = {'menu_items': menu_items, 'page_title': 'Cuenta', 'page_subtitle': 'Configuracion de la cuenta'}
     return render(request, 'cms/child_cuenta.html', context=context)
+def chat(request, **kwargs):
+    rooms = Room.objects.filter(name__in=["help", "questions", "urgent"])
+    context = {'menu_items': menu_items, 'page_title': 'Chat', 'page_subtitle': 'Mensajes a soporte tecnico','rooms': rooms}
+    return render(request, 'cms/child_chat.html',context=context)
 
+def room_view(request, room_name, **kwargs):
+    chat_room, created = Room.objects.get_or_create(name=room_name)
+    context = {'menu_items': menu_items, 'page_title': 'Cuenta', 'page_subtitle': 'Configuracion de la cuenta','room': chat_room}
+    return render(request, 'cms/child_room.html', context=context)
 
 def register_delete(request, equipment_id=0):
     print(request)

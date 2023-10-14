@@ -11,13 +11,18 @@ services:
       - .postgres_data:/var/lib/postgresql/data/
     ports:
       - "5437:5432"
-      
+
+  redis:
+    image: redis:latest
+    container_name: my-redis
+    ports:
+      - "6379:6379"
+
   server:
     container_name: cms_server
     volumes:
       - ./server:/app
       - ./server/static:/app/static
-
     env_file:
       - .env
     build: ./server
@@ -25,7 +30,7 @@ services:
       - "8005:8000"
     depends_on:
       - db
-
+      - redis  # Added dependency on the redis service
 
   nginx:
     build: ./nginx

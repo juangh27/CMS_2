@@ -2,30 +2,29 @@
 
 ## Usar ambiente virtual *(requiere tener python instalado)*
 
-1.  Creacion de la carpeta 
+1. Creacion de la carpeta
 
     ```py -3 -m venv venv```
 
+2. Activando venv
 
-2.  Activando venv
-    
     ```venv\Scripts\activate```
-    
-3.  Instalar django y otras dependecias 
+
+3. Instalar django y otras dependecias
 
     ``` pip install -r requirements.txt ```
 
-4.  Correr el servidor
+4. Correr el servidor
 
     ```cd server```
 
     ```manage.py runserver```
 
-5.  Para revisar la pagina es ir a la url http://localhost:8000/nido/
+5. Para revisar la pagina es ir a la url <http://localhost:8000/nido/>
+
 ## Usar contenedor mostrando el proyecto lo mas cercano a produccion *(requiere tener Docker instalado)*
 
 [![Alt text](https://img.youtube.com/vi/_et7H0EQ8fY/0.jpg)](https://www.youtube.com/watch?v=_et7H0EQ8fY)
-
 
 ### Antes de crear el contenedor renombrar ".envcopy" a ".env"
 
@@ -33,68 +32,61 @@
 
 ``` docker-compose up --build ```
 
-### Solo correr contendor 
+### Solo correr contendor
 
 ``` docker-compose up ```
 
-### Correr contenedor en background 
+### Correr contenedor en background
 
-``` docker-compose up -d```
+```docker-compose up -d```
+
 ### Detener contenedor
-``` docker-compose stop```
+
+```docker-compose stop```
+
 ### Borrar contenedor
-``` docker-compose down```
-### Depurar docker borrando imagenes, contenedores y volumenes sin usar 
-``` docker system prune```
 
+```docker-compose down```
 
+### Depurar docker borrando imagenes, contenedores y volumenes sin usar
 
+```docker system prune```
 
 ### Carpetas y archivos a revisar
 
-* _/server/nido/templates/nido/_
-    
+* */server/nido/templates/nido/*
+
     Aqui se encuentran los archivos html
 
-* _/server/nido/urls.py_
+* */server/nido/urls.py*
 
     Aqui estan las direciones de las paginas
 
-* _/server/nido/views.py_
+* */server/nido/views.py*
 
     Aqui tenemos las vistas de cada pagina
 
-* _/server/static_
+* */server/static*
 
-    Aqui estan los archivos estaticos 
+    Aqui estan los archivos estaticos
 
-    * css
-    * img
-    * js
-
-
+  * css
+  * img
+  * js
 
 //  manage.py makemigrations
     manage.py migrate
 
     docker exec -it cms_server sh
-
+    pip install channels
 
 revisar que el archivo sh sea LF en vez de CRLF
-
-
-
-
-
-
-
 
 docker exec -t <container_name_or_id> pg_dump -U <database_user> -d <database_name> > /path/on/aws/server/backup.sql
 docker exec -t <98366c41e2a0> pg_dump -U <postgres> -d <cmsdb> > /cms/backup.sql
 sudo docker exec -t 98366c41e2a0 pg_dump -U postgres -d cmsdb > /cms/backup.sql
 
 sudo docker exec -it 98366c41e2a0 mkdir /backup
-
 
 sudo docker exec -t 98366c41e2a0 sh -c "pg_dump -U postgres -d cmsdb > /backup/backup.sql"
 
@@ -112,4 +104,24 @@ scp -i C:\Users\jmgh8\Downloads\nido_ssh.pem ubuntu@44.202.131.33:/home/ubuntu/b
 
 scp -i C:\Users\jmgh8\Downloads\nido_ssh.pem ubuntu@44.202.131.33:/home/ubuntu/backup.sql C:\Users\jmgh8\Desktop
 
+## settings.py
+ 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
+## run python manage.py shell
+
+>>> import channels.layers
+>>> channel_layer = channels.layers.get_channel_layer()
+>>>
+>>> from asgiref.sync import async_to_sync
+>>> async_to_sync(channel_layer.send)('test_channel', {'type': 'hello'})
+>>> async_to_sync(channel_layer.receive)('test_channel')
+
+// {'type': 'hello'}
