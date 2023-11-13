@@ -1,4 +1,4 @@
-# Nido-Django-Docker-Dev
+# CMS Docker
 
 ## Usar ambiente virtual *(requiere tener python instalado)*
 
